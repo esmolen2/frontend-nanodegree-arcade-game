@@ -32,6 +32,21 @@ class Player {
       this.sprite = 'images/char-boy.png';
       this.x = 202;
       this.y = 385;
+    }
+
+    handleInput(key) {
+        if (key == 'left') {
+            this.x -= 101;
+        } else if (key == 'right') {
+            this.x += 101
+        } else if (key == 'up') {
+            this.y -= 85
+        } else if (key == 'down') {
+            this.y += 85
+        }
+    }
+
+    update() {
       this.xmin = 0;
       this.xmax = 404;
       if (this.x < this.xmin) {
@@ -48,10 +63,6 @@ class Player {
       if (this.y > this.ymax) {
           this.y = this.ymax;
       };
-    }
-
-    update(dt) {
-
     }
 
     render() {
