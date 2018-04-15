@@ -27,17 +27,39 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-const player = function() {
+class Player {
+    constructor() {
+      this.sprite = 'images/char-boy.png';
+      this.x = 202;
+      this.y = 385;
+      this.xmin = 0;
+      this.xmax = 404;
+      if (this.x < this.xmin) {
+          this.x = this.xmin;
+      };
+      if (this.x > this.xmax) {
+          this.x = this.xmax;
+      };
+      this.ymin = -30;
+      this.ymax = 385;
+      if (this.y < this.ymin) {
+          this.y = this.ymin;
+      };
+      if (this.y > this.ymax) {
+          this.y = this.ymax;
+      };
+    }
 
-};
+    update(dt) {
 
-player.update = function(dt) {
+    }
 
-};
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
 
-player.render = function(dt) {
-
-};
+const player = new Player();
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
