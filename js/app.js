@@ -1,19 +1,27 @@
 // Enemies our player must avoid
-const Enemy = function(x, y, speed) {
+const Enemy = function(speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = x;
-    this.y = y;
+    this.xstart = -97;
+    this.x = this.xstart;
+    this.ystart = function () {
+        let ystart;
+        const randomizer = Math.floor(Math.random() * 3) + 1;
+        randomizer == 1 ? ystart = 63  :
+        randomizer == 2 ? ystart = 145 : ystart = 229;
+        return ystart;
+    };
+    this.y = this.ystart();
     this.speed = speed;
 };
 
 const allEnemies = [];
 
-const enemy1 = new Enemy(-97, 63, 100);
+const enemy1 = new Enemy(100);
 
 allEnemies.push(enemy1);
 
@@ -26,7 +34,8 @@ Enemy.prototype.update = function(dt) {
     if (this.x < 600) {
         this.x = this.x + (this.speed * dt);
     } else {
-        this.x = -97;
+        this.x = this.xstart;
+        this.y = this.ystart();
     }
 };
 
