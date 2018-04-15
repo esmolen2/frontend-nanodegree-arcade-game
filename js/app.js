@@ -6,8 +6,10 @@ const Enemy = function(speed) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.xstart = -97;
-    this.x = this.xstart;
+    this.xstart = function () {
+        return Math.floor(Math.random() * -600) - 97;
+    };;
+    this.x = this.xstart();
     this.ystart = function () {
         let ystart;
         const randomizer = Math.floor(Math.random() * 3) + 1;
@@ -34,7 +36,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x < 600) {
         this.x = this.x + (this.speed * dt);
     } else {
-        this.x = this.xstart;
+        this.x = this.xstart();
         this.y = this.ystart();
     }
 };
