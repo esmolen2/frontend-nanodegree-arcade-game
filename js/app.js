@@ -53,8 +53,10 @@ Enemy.prototype.render = function() {
 class Player {
     constructor() {
       this.sprite = 'images/char-boy.png';
-      this.x = 202;
-      this.y = 385;
+      this.xstart = 202;
+      this.ystart = 385;
+      this.x = this.xstart;
+      this.y = this.ystart;
     }
 
     handleInput(key) {
@@ -81,7 +83,8 @@ class Player {
       this.ymin = 45;
       this.ymax = 385;
       if (this.y < this.ymin) {
-          this.y = this.ymax;
+          this.y = this.ystart;
+          this.x = this.xstart;
       };
       if (this.y > this.ymax) {
           this.y = this.ymax;
