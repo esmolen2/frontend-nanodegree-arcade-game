@@ -8,7 +8,7 @@ const Enemy = function(speed) {
     this.sprite = 'images/enemy-bug.png';
     this.xstart = function () {
         return Math.floor(Math.random() * -600) - 97;
-    };;
+    };
     this.x = this.xstart();
     this.ystart = function () {
         let ystart;
@@ -61,11 +61,11 @@ class Player {
         if (key == 'left') {
             this.x -= 101;
         } else if (key == 'right') {
-            this.x += 101
+            this.x += 101;
         } else if (key == 'up') {
-            this.y -= 85
+            this.y -= 85;
         } else if (key == 'down') {
-            this.y += 85
+            this.y += 85;
         }
     }
 
@@ -78,10 +78,10 @@ class Player {
       if (this.x > this.xmax) {
           this.x = this.xmax;
       };
-      this.ymin = -30;
+      this.ymin = 45;
       this.ymax = 385;
       if (this.y < this.ymin) {
-          this.y = this.ymin;
+          this.y = this.ymax;
       };
       if (this.y > this.ymax) {
           this.y = this.ymax;
