@@ -6,18 +6,18 @@ const Enemy = function(speed) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.xstart = function () {
+    this.xStart = function () {
         return Math.floor(Math.random() * -600) - 97;
     };
-    this.x = this.xstart();
-    this.ystart = function () {
-        let ystart;
+    this.x = this.xStart();
+    this.yStart = function () {
+        let yStart;
         const randomizer = Math.floor(Math.random() * 3) + 1;
-        randomizer == 1 ? ystart = 63  :
-        randomizer == 2 ? ystart = 145 : ystart = 229;
-        return ystart;
+        randomizer == 1 ? yStart = 63  :
+        randomizer == 2 ? yStart = 145 : yStart = 229;
+        return yStart;
     };
-    this.y = this.ystart();
+    this.y = this.yStart();
     this.speed = speed;
 };
 
@@ -36,8 +36,8 @@ Enemy.prototype.update = function(dt) {
     if (this.x < 600) {
         this.x = this.x + (this.speed * dt);
     } else {
-        this.x = this.xstart();
-        this.y = this.ystart();
+        this.x = this.xStart();
+        this.y = this.yStart();
     }
 };
 
@@ -53,10 +53,10 @@ Enemy.prototype.render = function() {
 class Player {
     constructor() {
       this.sprite = 'images/char-boy.png';
-      this.xstart = 202;
-      this.ystart = 385;
-      this.x = this.xstart;
-      this.y = this.ystart;
+      this.xStart = 202;
+      this.yStart = 385;
+      this.x = this.xStart;
+      this.y = this.yStart;
     }
 
     handleInput(key) {
@@ -72,22 +72,22 @@ class Player {
     }
 
     update() {
-      this.xmin = 0;
-      this.xmax = 404;
-      if (this.x < this.xmin) {
-          this.x = this.xmin;
+      this.xMin = 0;
+      this.xMax = 404;
+      if (this.x < this.xMin) {
+          this.x = this.xMin;
       };
-      if (this.x > this.xmax) {
-          this.x = this.xmax;
+      if (this.x > this.xMax) {
+          this.x = this.xMax;
       };
-      this.ymin = 45;
-      this.ymax = 385;
-      if (this.y < this.ymin) {
-          this.y = this.ystart;
-          this.x = this.xstart;
+      this.yMin = 45;
+      this.yMax = 385;
+      if (this.y < this.yMin) {
+          this.y = this.yStart;
+          this.x = this.xStart;
       };
-      if (this.y > this.ymax) {
-          this.y = this.ymax;
+      if (this.y > this.yMax) {
+          this.y = this.yMax;
       };
     }
 
