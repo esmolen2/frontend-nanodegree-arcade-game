@@ -55,7 +55,7 @@ class Player {
 
       // Always start the player in the middle of the bottom row of grass on the canvas
       this.xStart = 202;
-      this.yStart = 385;
+      this.yStart = 400;
       this.x = this.xStart;
       this.y = this.yStart;
     }
@@ -73,9 +73,9 @@ class Player {
         } else if (key == 'right') {
             this.x += 101;
         } else if (key == 'up') {
-            this.y -= 85;
+            this.y -= 83;
         } else if (key == 'down') {
-            this.y += 85;
+            this.y += 83;
         }
     }
 
@@ -116,7 +116,7 @@ class Player {
       // Vertically bind the player within the grass and cement blocks
       // If the player hits the water, reset to starting position
       this.yMin = 45;
-      this.yMax = 385;
+      this.yMax = 400;
       if (this.y < this.yMin) {
           player.reset();
       };
