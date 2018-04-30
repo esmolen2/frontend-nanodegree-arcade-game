@@ -6,6 +6,8 @@ const Enemy = function(speed) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.spriteWidth = 98;
+    this.spriteHeight = 66;
     this.xStart = function () {
         return Math.floor(Math.random() * -600) - 97;
     };
@@ -53,6 +55,8 @@ Enemy.prototype.render = function() {
 class Player {
     constructor() {
       this.sprite = 'images/char-boy.png';
+      this.spriteWidth = 67;
+      this.spriteHeight = 76;
       this.xStart = 202;
       this.yStart = 385;
       this.x = this.xStart;
@@ -69,6 +73,21 @@ class Player {
         } else if (key == 'down') {
             this.y += 85;
         }
+    }
+
+    checkCollisions() {
+        let playerBoxX = this.x + 17;
+        let playerBoxY = this.y + 63;
+        allEnemies.forEach(function(enemy) {
+            let enemyBoxX = enemy.x + 1;
+            let enemyBoxY = enemy.y + 77;
+            if (playerBoxX < enemyBoxX + enemy.spriteWidth && // check left side of player
+                playerBoxX + player.spriteWidth > enemyBoxX && // check right side of player
+                playerBoxY < enemyBoxY + enemy.spriteHeight && // check top side of player
+                player.spriteHeight + playerBoxY > enemyBoxY) { // check bottom side of player
+                  console.log('collision!!!!');
+            }
+        });
     }
 
     update() {
@@ -89,6 +108,7 @@ class Player {
       if (this.y > this.yMax) {
           this.y = this.yMax;
       };
+      this.checkCollisions();
     }
 
     render() {
