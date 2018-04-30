@@ -36,7 +36,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x < 600) {                       // If enemy is on screen,
         this.x = this.x + (this.speed * dt);  // move enemy according to its speed.
     } else {                                  // If enemy is off screen to the right,
-        this.x = this.xStart();               // restart its position to the left side.
+        this.x = this.xStart();               // restart its position to the left side and
         this.y = this.yStart();
         this.speed = this.speedSet();         // randomly reset it's speed
     }
@@ -139,11 +139,13 @@ class Player {
 }
 
 // Instantiate enemies and place them in an array
-const allEnemies = [];
+const enemyOne = new Enemy();
+const enemyTwo = new Enemy();
+const enemyThree = new Enemy();
+const enemyFour = new Enemy();
+const enemyFive = new Enemy();
 
-const enemy1 = new Enemy();
-
-allEnemies.push(enemy1);
+const allEnemies = [enemyOne, enemyTwo, enemyThree, enemyFour, enemyFive];
 
 // Instantiate the player
 const player = new Player();
