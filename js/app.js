@@ -1,17 +1,19 @@
 // Enemies our player must avoid
 const Enemy = function(speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
+    // The image/sprite for our enemies, this uses a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+
+    // Actual visual size of the enemy, takes into account the image file's transparency
     this.spriteWidth = 98;
     this.spriteHeight = 66;
+
+    // Randomize the left-side starting position of the enemy to randomly time it's appearance on the canvas
     this.xStart = function () {
         return Math.floor(Math.random() * -600) - 97;
     };
     this.x = this.xStart();
+
+    // Randomize the row (1 of 3) the enemy appears in
     this.yStart = function () {
         let yStart;
         const randomizer = Math.floor(Math.random() * 3) + 1;
@@ -20,25 +22,18 @@ const Enemy = function(speed) {
         return yStart;
     };
     this.y = this.yStart();
+
+    // Set the enemy speed
     this.speed = speed;
 };
 
-const allEnemies = [];
-
-const enemy1 = new Enemy(100);
-
-allEnemies.push(enemy1);
-
 // Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+// Parameter: dt, a time delta between ticks; will ensure the game runs at the same speed for all computers
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    if (this.x < 600) {
-        this.x = this.x + (this.speed * dt);
-    } else {
-        this.x = this.xStart();
+    if (this.x < 600) {                       // If enemy is on screen,
+        this.x = this.x + (this.speed * dt);  // move enemy according to its speed.
+    } else {                                  // If enemy is off screen to the right,
+        this.x = this.xStart();               // restart its position to the left side.
         this.y = this.yStart();
     }
 };
@@ -48,26 +43,30 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
+// Player to be controlled
 class Player {
     constructor() {
+      // The image/sprite for our player, this uses a helper we've provided to easily load images
       this.sprite = 'images/char-boy.png';
+
+      // Actual visual size of the player, takes into account the image file's transparency
       this.spriteWidth = 67;
       this.spriteHeight = 76;
+
+      // Always start the player in the middle of the bottom row of grass on the canvas
       this.xStart = 202;
       this.yStart = 385;
       this.x = this.xStart;
       this.y = this.yStart;
     }
 
+    // Reset the player to the starting position: middle of the bottom row of grass on the canvas
     reset() {
       this.x = this.xStart;
       this.y = this.yStart;
     }
 
+    // Move the player to the next block accordingly for each key press
     handleInput(key) {
         if (key == 'left') {
             this.x -= 101;
@@ -80,22 +79,31 @@ class Player {
         }
     }
 
+    // Check if any of the enemies and the player occupy the same space, and reset the player if they do
     checkCollisions() {
+        // Set the actual visual start of the player, taking into account the image file's transparency
         let playerBoxX = this.x + 17;
         let playerBoxY = this.y + 63;
+
+        // Loop through all instantiated enemies and check if any occupy the same space as the player
+        // Reset the player if they do
         allEnemies.forEach(function(enemy) {
+            // Set the actual visual start of the enemy, taking into account the image file's transparency
             let enemyBoxX = enemy.x + 1;
             let enemyBoxY = enemy.y + 77;
-            if (playerBoxX < enemyBoxX + enemy.spriteWidth && // check left side of player
-                playerBoxX + player.spriteWidth > enemyBoxX && // check right side of player
-                playerBoxY < enemyBoxY + enemy.spriteHeight && // check top side of player
-                player.spriteHeight + playerBoxY > enemyBoxY) { // check bottom side of player
-                  player.reset();
+
+            // Check for any overlap of enemy and player
+            if (playerBoxX < enemyBoxX + enemy.spriteWidth &&   // check left side of player vs. right side of enemy
+                playerBoxX + player.spriteWidth > enemyBoxX &&  // check right side of player vs. left side of enemy
+                playerBoxY < enemyBoxY + enemy.spriteHeight &&  // check top side of player vs. bottom side of enemy
+                player.spriteHeight + playerBoxY > enemyBoxY) { // check bottom side of player vs. top side of enemy
+                  player.reset();                               // reset the player to start position if overlap
             }
         });
     }
-
+    // Update the player's position
     update() {
+      // Horizontally bind the player inside the canvas
       this.xMin = 0;
       this.xMax = 404;
       if (this.x < this.xMin) {
@@ -104,6 +112,9 @@ class Player {
       if (this.x > this.xMax) {
           this.x = this.xMax;
       };
+
+      // Vertically bind the player within the grass and cement blocks
+      // If the player hits the water, reset to starting position
       this.yMin = 45;
       this.yMax = 385;
       if (this.y < this.yMin) {
@@ -112,21 +123,26 @@ class Player {
       if (this.y > this.yMax) {
           this.y = this.yMax;
       };
+
+      // Check if the player and enemy overlap at all
       this.checkCollisions();
     }
 
+    // Draw the player on the screen
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
 
+// Instantiate enemies and place them in an array
+const allEnemies = [];
+
+const enemy1 = new Enemy(100);
+
+allEnemies.push(enemy1);
+
+// Instantiate the player
 const player = new Player();
-
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
