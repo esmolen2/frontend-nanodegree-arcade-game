@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-const Enemy = function(speed) {
+const Enemy = function() {
     // The image/sprite for our enemies, this uses a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
@@ -23,8 +23,11 @@ const Enemy = function(speed) {
     };
     this.y = this.yStart();
 
-    // Set the enemy speed
-    this.speed = speed;
+    // Randomize the enemy speed
+    this.speedSet = function () {
+        return Math.random() * 150 + 75;
+    };
+    this.speed = this.speedSet();
 };
 
 // Update the enemy's position, required method for game
@@ -35,6 +38,7 @@ Enemy.prototype.update = function(dt) {
     } else {                                  // If enemy is off screen to the right,
         this.x = this.xStart();               // restart its position to the left side.
         this.y = this.yStart();
+        this.speed = this.speedSet();         // randomly reset it's speed
     }
 };
 
@@ -137,7 +141,7 @@ class Player {
 // Instantiate enemies and place them in an array
 const allEnemies = [];
 
-const enemy1 = new Enemy(100);
+const enemy1 = new Enemy();
 
 allEnemies.push(enemy1);
 
