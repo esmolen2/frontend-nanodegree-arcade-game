@@ -63,6 +63,11 @@ class Player {
       this.y = this.yStart;
     }
 
+    reset() {
+      this.x = this.xStart;
+      this.y = this.yStart;
+    }
+
     handleInput(key) {
         if (key == 'left') {
             this.x -= 101;
@@ -85,7 +90,7 @@ class Player {
                 playerBoxX + player.spriteWidth > enemyBoxX && // check right side of player
                 playerBoxY < enemyBoxY + enemy.spriteHeight && // check top side of player
                 player.spriteHeight + playerBoxY > enemyBoxY) { // check bottom side of player
-                  console.log('collision!!!!');
+                  player.reset();
             }
         });
     }
@@ -102,8 +107,7 @@ class Player {
       this.yMin = 45;
       this.yMax = 385;
       if (this.y < this.yMin) {
-          this.y = this.yStart;
-          this.x = this.xStart;
+          player.reset();
       };
       if (this.y > this.yMax) {
           this.y = this.yMax;
